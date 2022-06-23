@@ -1,0 +1,18 @@
+.form{
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: fit-content;
+}
+.header{
+    margin: 0.5rem;
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    justify-content: space-between;
+    div{
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+    }
+}

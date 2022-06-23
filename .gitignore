@@ -61,6 +61,9 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
+#next files 
+.next
+
 # dotenv environment variables file
 .env
 lib

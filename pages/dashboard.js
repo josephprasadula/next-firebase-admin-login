@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import imgscr from '../graph.webp'
-import { useAuth, AuthContext } from '../context/Authcontext';
+import { useAuth } from '../context/Authcontext';
 import firebase,{auth, db,storage} from './firebaseconfig'
 
 import LayoutComponent from '../components/layout'
@@ -18,11 +18,10 @@ export default function App() {
   
   const router = useRouter()
   // console.log(router.pathname)
-  const {currentUser,setCurrentUser} = useAuth()
+  const {currentUser} = useAuth()
   var myUserId = currentUser?currentUser.email:''
   const user = auth.currentUser
   // console.log(user.displayName)
-const [data, setData] = useState({})
 
 return(
   <LayoutComponent>

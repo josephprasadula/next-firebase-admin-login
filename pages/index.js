@@ -15,17 +15,36 @@ const App = () => {
   const {login} = useAuth()
   const Router = useRouter()
   const onFinish = (values) => {
-    console.log('Success:', values);
+    const {username,password,remember} = values;
+   
+    if(username && password){
+      login(username,password).then((userCreditials)=>{
+        var user = userCreditials
+      }).catch((err)=>{
+        alert(`${err}`);
+      }
+      )
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   const [data,setData] = useState({})
-  const {currentUser,setCurrentUser} = useAuth()
+  const {currentUser} = useAuth();
   const handleInput = (e) =>{
     let input = {[e.target.name]:e.target.value}
     setData({...data,...input})
   }
+  useEffect(()=>{
+    console.log('current users',currentUser);
+    if(currentUser)
+    {
+      Router.push('/dashboard');
+    }else{
+      Router.push('/');
+    }
+
+  },[currentUser]);
   const handleSubmit = (e)=>{
     e.preventDefault()
     let email=data.email;
@@ -36,7 +55,7 @@ const App = () => {
     login(email,password).then((userCreditials)=>{
       var user = userCreditials
       if(user){
-        Router.push('/dashboard')
+        // Router.push('/dashboard')
       // console.log(user.user.uid)
     }}).catch((err)=>{
       // setMsg("error")
@@ -73,7 +92,7 @@ return (
           },
         ]}
       >
-        <Input name='email' onChange={(e)=>{handleInput(e)}}/>
+        <Input name='email' />
       </Form.Item>
 
       <Form.Item
@@ -86,7 +105,7 @@ return (
           },
         ]}
       >
-        <Input.Password name='password' onChange={(e)=>{handleInput(e)}}/>
+        <Input.Password name='password'/>
       </Form.Item>
 
       <Form.Item
@@ -97,7 +116,7 @@ return (
           span: 16,
         }}
       >
-        <Checkbox onChange={()=>{setRemember(true)}}>Remember me</Checkbox>
+        <Checkbox >Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item
@@ -106,7 +125,7 @@ return (
           span: 16,
         }}
       >
-        <Button onClick={(e) =>{handleSubmit(e)}} type="primary" htmlType="submit">
+        <Button  type="primary" htmlType="submit">
           Submit
         </Button>  or <Link href="/register">
           <a>Register Now</a>

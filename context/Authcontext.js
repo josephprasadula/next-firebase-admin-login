@@ -24,13 +24,13 @@ export function AuthProvider({children}) {
         setCurrentUser(user)})
         return unsubscribe
     },[])
-    useEffect(()=>{if(router.pathname=='/'||router.pathname=='/register'||router.pathname=='/404'||router.pathname=='/_error'){
-      console.log('can access pages with out logining in')  
-    }else{
-      if(!currentUser)
-      router.push('/')
-    }
-    },[router.pathname])
+    // useEffect(()=>{if(router.pathname=='/'||router.pathname=='/register'||router.pathname=='/404'||router.pathname=='/_error'){
+    //   console.log('can access pages with out logining in')  
+    // }else{
+    //   if(!currentUser)
+    //   router.push('/')
+    // }
+    // },[router.pathname])
     const value= {
         currentUser,
         signup,

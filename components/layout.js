@@ -1,7 +1,6 @@
 import React, { useState ,useEffect} from 'react';
 import { useRouter } from 'next/router'
 
-import { useAuth,} from '../context/Authcontext';
 import firebase,{auth, db} from '../pages/firebaseconfig'
 
 import HeadSection from './headerForLogedPages'
@@ -11,18 +10,29 @@ import { Result, Button ,Modal,Select,Menu, Layout,Form,Input} from 'antd';
 import { MailOutlined, SettingOutlined, HomeOutlined , AppstoreOutlined} from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
 
+import { useAuth } from '../context/Authcontext';
+
 const { Content, Footer, Sider } = Layout;
 
 export default function App({children}) {
-  const {logout} = useAuth()
-  const router = useRouter()
+  const {logout} = useAuth();
+  const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [deleteModal,setDeleteModal] = useState(false)
   const [passwordModal,setPasswordModal] = useState(false)
   const [updateEmail,setUpdateEmail] = useState('')
-  const {currentUser,setCurrentUser} = useAuth()
+  const {currentUser} = useAuth();
+
+  
+useEffect(()=>{
+  console.log('current users',currentUser);
+  if(!currentUser)
+  {
+    router.push('/');
+  }
+},[currentUser]);
 
 const showModal = () => {
   setIsModalVisible(true);

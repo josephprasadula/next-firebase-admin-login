@@ -9,9 +9,9 @@ import { useRouter } from 'next/router'
 import UserUpdate from '../components/updateUser';
 
 
-import { Button ,Modal,message, Popconfirm} from 'antd';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css'
-import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import { Button ,Modal,Divider,message,Space, Popconfirm,Table} from 'antd';
+
+
 import LayoutSection from '../components/layout'
 
 
@@ -47,7 +47,9 @@ export default function App() {
       .then(querySnapshot => {
         const temp=querySnapshot.docs.map(doc => {
         //   console.log('LOG 1', doc.data());
-          return doc.data();
+          return { ...doc.data(),
+            uid: doc.id
+          };
         });
         // ********************must********************
         setUser(temp)
@@ -57,40 +59,31 @@ export default function App() {
   useEffect(()=>{
     getMarkers()
   },[temp1])
-
-return(
-<LayoutSection>
-<div style={{margin:'auto 5rem'}}>
-  <MDBTable striped>
-    <MDBTableHead>
-      <tr>
-        <th scope='col'>CreatedBy</th>
-        <th scope='col'>Name</th>
-        <th scope='col'>Gender</th>
-        <th scope='col'>Email</th>
-        <th scope='col'>edit</th>
-        <th scope='col'>delete</th>
-      </tr>
-    </MDBTableHead>
-  <MDBTableBody>
-    {user.map((users)=>{
-      let email=users.email
-      return(
-        <>
-        <tr key={users.createdAt}>
-          <th scope='row'>{users.createdBy
-          }</th>
-          <td>{users.name}</td>
-          <td>{users.gender}</td>
-          <td  className='email'>{users.email} </td>
-          <td>{<Button name={email} 
-                      onClick={(e)=>{setUpdateUser(email)
-                                    return showUpdateUserVisible()}}
-                type="primary">Edit</Button>} </td>
-          
-          <td>{<Popconfirm placement="leftTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No" >
-            <Button name={email} onClick={(e)=>{
-              let queryEmail = email
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Gender ',
+      dataIndex: 'gender',
+    },
+    {
+      title: 'Email-Id',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Created-By',
+      dataIndex: 'createdBy',
+    },
+    {
+      title: '  Action',
+      dataIndex: 'uid',
+      render: ((text,record) => {
+        return (<div>
+          <Popconfirm placement="leftTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No" >
+            <Button onClick={(e)=>{
+              let queryEmail = record.email
               console.log(queryEmail)
               const collectionRef=db.collection('next-register')
                 collectionRef.where("email", "==", `${queryEmail}`)
@@ -110,26 +103,24 @@ return(
                 .catch(function(error) {
                   console.log("Error getting documents: ", error);
                 });
-            }} type="primary" danger>Delete</Button>
-          </Popconfirm >} </td>
-        </tr>
-
-        </>
-        
-      )
-    })}
-  <Modal title="update user details" visible={updateUserVisible} onOk={handleUserOk} onCancel={handleUserCancel}>
-    <UserUpdate value={updateUser} />
-  </Modal>
-    {/* <Modal title="Edit User" visible={isModalVisible}   onOk={handleOk} onCancel={handleCancel}>
-      <div>
-        <Register />    
-      </div>
-    </Modal> */}
-  </MDBTableBody>
-  </MDBTable>
+              }} type='primary' danger>Delete</Button>
+          </Popconfirm>
+          <Divider type="vertical" style={{color:'#000'}}/>
+          <Button type='primary' onClick={(e)=>{setUpdateUser(record.email)
+                                    return showUpdateUserVisible()}}>Edit</Button>
+          </div>);
+      })
+      
+    },
+  ];
+return(
+<LayoutSection>
+<div style={{margin:'auto 5rem'}}>
+    <Table columns={columns} dataSource={user} size="middle" />
+    <Modal title="update user details" visible=     {updateUserVisible} onOk={handleUserOk} onCancel={handleUserCancel}>
+      <UserUpdate value={updateUser} />
+    </Modal>
 </div>
-
 </LayoutSection>
 
 

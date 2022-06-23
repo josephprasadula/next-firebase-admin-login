@@ -187,7 +187,7 @@ const App = () => {
                 ]}
                 hasFeedback
             >
-                <Input.Password  name='password' onChange={(e)=>{handleInput(e)}} />
+                <Input.Password  name='password'/>
             </Form.Item>
 
             <Form.Item

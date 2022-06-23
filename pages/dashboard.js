@@ -9,7 +9,7 @@ import firebase,{auth, db,storage} from './firebaseconfig'
 import LayoutComponent from '../components/layout'
 import DemoRingProgress from '../components/userpercentchart';
 
-import { Result,Modal,Form,Input,Button,Tooltip} from 'antd';
+import { Result,Modal,Form,Input,Button,Tooltip, Checkbox} from 'antd';
 import { SmileOutlined} from '@ant-design/icons';
 
 
@@ -48,17 +48,21 @@ return(
     </Result>
     {user&&<div style={{left:'0',right:'0',margin:'auto',width:'fit-content'}}>
       <h3>Complete user details</h3>
-      <Tooltip title='click on me'>
+      
       <div style={{marginLeft:'4.5rem',borderRadius:'50%'}}>
       <Button type='primary' onClick={ShowformModal} style={{marginBottom:'1rem'}}>Click me</Button>
       <Modal title="Fill your details mofo" visible={formVisible} onOk={handleFormOk} onCancel={handleFormCancel}>
         <Form>
-
+          <Input disabled='true'  name='name' />
+          <Checkbox placeholder='username same as fullname'/><Input placeholder='Username' name='dislayName'><label>username same as fullname</label></Input>
+          <Input  name='name' />
         </Form>
       </Modal>
-      <DemoRingProgress />
+      
       </div>
-      </Tooltip> 
+      {/* <Tooltip title='click on me'> */}
+      <DemoRingProgress />
+      {/* </Tooltip>  */}
     </div>}
     
     {/* {(user.displayName!==null)?<h1>{currentUser.displayName}</h1>:<>

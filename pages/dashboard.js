@@ -9,20 +9,29 @@ import firebase,{auth, db,storage} from './firebaseconfig'
 import LayoutComponent from '../components/layout'
 import DemoRingProgress from '../components/userpercentchart';
 
-import { Result,Input,Button,Tooltip} from 'antd';
+import { Result,Modal,Form,Input,Button,Tooltip} from 'antd';
 import { SmileOutlined} from '@ant-design/icons';
 
 
 
 export default function App() {
-  
+  const [formVisible,setFormVisible] = useState(false)
   const router = useRouter()
   // console.log(router.pathname)
   const {currentUser} = useAuth()
   var myUserId = currentUser?currentUser.email:''
   const user = auth.currentUser
   // console.log(user.displayName)
+  const ShowformModal = ()=>{
+    setFormVisible(true)
+  }
 
+  const handleFormOk =()=>{
+    setFormVisible(false)
+  }
+  const handleFormCancel =()=>{
+    setFormVisible(false)
+  }
 return(
   <LayoutComponent>
     <>
@@ -41,6 +50,12 @@ return(
       <h3>Complete user details</h3>
       <Tooltip title='click on me'>
       <div style={{marginLeft:'4.5rem',borderRadius:'50%'}}>
+      <Button type='primary' onClick={ShowformModal} style={{marginBottom:'1rem'}}>Click me</Button>
+      <Modal title="Fill your details mofo" visible={formVisible} onOk={handleFormOk} onCancel={handleFormCancel}>
+        <Form>
+
+        </Form>
+      </Modal>
       <DemoRingProgress />
       </div>
       </Tooltip> 

@@ -117,11 +117,9 @@ return(
 <LayoutSection>
 <div style={{margin:'auto 5rem'}}>
     <Table columns={columns} dataSource={user} size="middle" />
-    <Modal title="update user details" visible=     {updateUserVisible} onOk={handleUserOk} onCancel={handleUserCancel}>
+    <Modal title="update user details" visible={updateUserVisible} onOk={handleUserOk} onCancel={handleUserCancel}>
       <UserUpdate value={updateUser} />
     </Modal>
 </div>
 </LayoutSection>
-
-
 )}

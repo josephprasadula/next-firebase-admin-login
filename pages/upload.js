@@ -8,27 +8,6 @@ import firebase,{auth, db,storage} from './firebaseconfig'
 export default function App() {
   const [data, setData] = useState({})
   const {currentUser,setCurrentUser} = useAuth()
-    // console.log(currentUser.email)
-    // var myUserId = auth.currentUser.email;
-    // let myUserId = auth.currentUser.email
-    // if(currentUser){
-    //   myUserId = auth.currentUser
-    // }
-    // db.collection("users").get().then((querySnapshot) => {
-    //   querySnapshot.filter((doc) => {
-    //       if(data.id==myUserId);
-    //   });
-    // const userName=db.collection('next-register').doc(myUserId).get().then(data=>console.log(data))  
-    // const name = userName.name
-    // console.log(myUserId,userName)
-    // console.log(userName)
-    // const querySnapshot = getDocs(collection(db, "labels"));
-  
-    // querySnapshot.map((doc) => {
-    //   if(doc=`${currentUser.user.uid}`){
-    //     return doc.name
-    //   }
-    // });
   
   const userdata = () =>{
     db.collection('next-register').doc()

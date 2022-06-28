@@ -70,6 +70,8 @@ return(
     extra={
       <div>
         <h3>{myUserId}</h3>
+        {user&&<img style={{maxWidth:'10rem',maxHeight:'10rem',width:'auto',height:'auto'}} src={user.photoURL!=null?user.photoURL:'#'}></img>}
+        
       </div>  
     }
     >
@@ -81,11 +83,12 @@ return(
       <DemoRingProgress />
       <Modal title="Fill your details mofo" visible={formVisible} onOk={handleFormOk} onCancel={handleFormCancel}>
         {user&&<Form>
-          <ImgCrop>
+          <ImgCrop grid>
             <Input type='file' onChange={(e)=>{
             const file = e.target.files[0];
             uploadImg(file)
-            }} name='imageUrl' />
+            }} name='imageUrl'></Input>
+            
           </ImgCrop>
           
           <Input disabled={true}  name='email' value={user.email} style={{marginTop:'1.5rem', width: 'calc(100% - 200px)'}}/>

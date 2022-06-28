@@ -97,7 +97,11 @@ export default function headerForLogedPages() {
                   user.sendEmailVerification()
                   .then(() => {
                     alert('email for verification has been sent for your email')
+                    
                   });
+                }else{
+                  setColor('green')
+                  setDisabled(true)
                 }
               }} style={{backgroundColor:color,marginLeft:'1.2rem',fontSize:'1rem'}} type="primary" icon={<CheckCircleTwoTone />} size='medium'>
               verify email
